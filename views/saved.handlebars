@@ -1,0 +1,55 @@
+<div class="header">
+    <div class="home-menu pure-menu pure-menu-horizontal pure-menu-fixed">
+        <p id="brand" class="pure-menu-heading"><i class="fa fa-newspaper-o" aria-hidden="true"></i> Newscraper</p>
+
+        <ul class="pure-menu-list">
+            <li class="pure-menu-item"><a id="saved-articles-link" href="/" class="pure-menu-link">Home</a></li>
+            <li class="pure-menu-item pure-menu-selected"><a id="saved-articles-link" class="pure-menu-link">Saved Articles</a></li>
+        </ul>
+    </div>
+</div>
+
+<div class="splash-container">
+    <div class="splash">
+        <h1 class="splash-head">Saved Articles</h1>
+        {{!-- <p><a id="scrape-button" class="pure-button pure-button-primary">Scrape Articles</a></p> --}}
+    </div>
+</div>
+
+{{!-- scrolling content wrapper --}}
+<div class="content-wrapper">
+    <div class="content">
+        <h1 id="saved-articles-header">There are no saved articles</h1>
+
+    {{!-- pure grid --}}
+    <div id="saved-articles-container" class="pure-g">
+
+        {{!-- dynamically created articles go here --}}
+    </div>
+
+    </div>
+</div>
+
+<div id="notes-modal" class="modal fade modal-dialog modal-sm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
+        <h2 id="notes-modal-header">Notes for Article: <span id="article-id"></span></h2>
+    </div>
+    <div class="modal-body">
+        <div id="notes-container">
+            <div class="article-note empty">
+                There are no notes for this article
+            </div>
+        </div>
+        <form>
+            <textarea id="new-note" placeholder="Enter a note"></textarea>
+        </form>
+    </div>
+
+    <div class="modal-footer">
+        <form>
+            <button class="pure-button" data-dismiss="modal" aria-hidden="true">Close</button>
+            <button id="note-submit-button" class="pure-button pure-button-primary">Submit</button>
+        </form>
+    </div>
+</div>
+<script src="assets/js/saved.js"></script>

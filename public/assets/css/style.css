@@ -1,0 +1,283 @@
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+body {
+    line-height: 1.7em;
+    color: #7f8c8d;
+    font-size: 13px;
+}
+
+#brand {
+    margin: 0px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+label {
+    color: #34495e;
+}
+
+.pure-img-responsive {
+    max-width: 100%;
+    height: auto;
+}
+
+#scrape-button {
+    border: 1px solid #cccccc;;
+}
+
+a.pure-button-primary {
+    background: white;
+    color: #1f8dd6;
+    border-radius: 5px;
+    font-size: 120%;
+}
+
+.home-menu {
+    padding: 0.5em;
+    text-align: center;
+    box-shadow: 0 1px 1px rgba(0,0,0, 0.10);
+}
+
+.home-menu {
+    background: #2d3e50;
+}
+
+.pure-menu.pure-menu-fixed {
+    border-bottom: none;
+    z-index: 4;
+}
+
+.home-menu .pure-menu-heading {
+    color: white;
+    font-weight: 400;
+    font-size: 120%;
+}
+
+.home-menu .pure-menu-selected a {
+    color: white;
+}
+
+.home-menu a {
+    color: #6fbef3;
+}
+
+.home-menu li a:hover,
+.home-menu li a:focus {
+    background: none;
+    border: none;
+    color: #aecfe5;
+}
+
+.splash-container {
+    background-image: url("https://wallpaperscraft.com/image/morning_coffee_newspaper_79004_2560x1080.jpg");
+    background-size: cover;
+    z-index: 1;
+    overflow: hidden;
+    width: 100%;
+    height: 80%;
+    top: 0;
+    left: 0;
+    position: fixed !important;
+}
+
+.splash {
+    width: 80%;
+    height: 50%;
+    margin: auto;
+    position: absolute;
+    top: 100px; left: 0; bottom: 0; right: 0;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.splash-head {
+    font-size: 20px;
+    font-weight: bold;
+    background: #1f8dd6;
+    color: white;
+    border: 3px solid white;
+    padding: 1em 1.6em;
+    font-weight: 100;
+    border-radius: 5px;
+    line-height: 1em;
+}
+
+.splash-subhead {
+    color: #2d3e50;
+    letter-spacing: 0.05em;
+    opacity: 0.8;
+}
+
+ .content-wrapper {
+    position: absolute;
+    top: 80%;
+    width: 100%;
+    min-height: 12%;
+    z-index: 2;
+    background: white;
+}
+
+.content {
+    padding: 1em 1em 3em;
+    text-align: center;
+}
+
+.content-head {
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin: 2em 0 1em;
+}
+
+.content-head-ribbon {
+    color: white;
+}
+
+.content-subhead {
+    color: #1f8dd6;
+}
+
+.content-subhead i {
+    margin-right: 7px;
+}
+
+.article {
+    border-radius: 5px;
+    box-shadow: 5px 5px 20px #37474f;
+    margin-bottom: 20px;
+}
+
+.article-head {
+    text-align: center;
+    background-color: #1f8dd6;
+    border-radius: 5px 5px 0px 0px;
+}
+
+.article-head h3 {
+    float: left;
+    color: white;
+    margin-top: 15px;
+    margin-left: 10px;
+}
+
+.article-head .save-article-button,
+.article-head .note-button,
+.article-head .delete-article-button {
+    float: right;
+    background-color: #2d3e50;
+    color: white;
+    margin-top: 13px;
+    margin-right: 10px;
+    padding: 0.5em 2em;
+    border-radius: 5px;
+}
+
+.article-body {
+    background-color: #f7f9fa;
+    border-radius: 0px 0px 5px 5px;
+    text-align: left;
+}
+
+.article-body .article-link,
+.article-body .article-summary {
+    color: #2d3e50;
+    float: left;
+    clear:both;
+    margin-left: 10px;
+}
+
+.article-body .article-summary {
+    font-weight: bold;
+}
+
+.article-body {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.article-note {
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+    min-height: 50px;
+    margin-bottom: 5px;
+}
+
+.article-note.empty {
+    padding-top: 10px;
+}
+
+#new-note {
+    margin-top: 10px;
+    width: 100%;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+    color: #7f8c8d;
+    font-size: 10px;
+}
+
+.new-note-text {
+    float: left;
+    margin: 10px;
+    font-size: 10px;
+}
+
+.pure-button.delete-note-button {
+    float: right;
+    margin: 5px;
+    margin-top: 7px;
+    margin-right: 10px;
+    background-color: red;
+    color: black;
+    border-radius: 4px;
+}
+
+@media (min-width: 48em) {
+
+    body {
+        font-size: 16px;
+    }
+
+    .home-menu {
+        text-align: left;
+    }
+
+    .home-menu ul {
+            float: right;
+    }
+
+    .splash {
+        width: 50%;
+        height: 50%;
+    }
+
+    .splash-head {
+        font-size: 250%;
+    }
+
+    .l-box-lrg {
+        border: none;
+    }
+}
+
+.modal {
+    text-align: center;
+}
+
+#scrape-message {
+    font-size
+}
+
+@media (min-width: 78em) {
+    /* We increase the header font size even more */
+    .splash-head {
+        font-size: 300%;
+    }
+}

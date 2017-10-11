@@ -1,0 +1,93 @@
+<div class="header">
+    <div class="home-menu pure-menu pure-menu-horizontal pure-menu-fixed">
+        <p id="brand" class="pure-menu-heading"><i class="fa fa-newspaper-o" aria-hidden="true"></i> Newscraper</p>
+
+        <ul class="pure-menu-list">
+            <li class="pure-menu-item pure-menu-selected"><a id="saved-articles-link" class="pure-menu-link">Home</a></li>
+            <li class="pure-menu-item"><a id="saved-articles-link" href="/saved" class="pure-menu-link">Saved Articles</a></li>
+        </ul>
+    </div>
+</div>
+
+<div class="splash-container">
+    <div class="splash">
+        <h1 class="splash-head">Newscraper</h1>
+        <p><a id="scrape-button" class="pure-button pure-button-primary">Scrape Articles</a></p>
+    </div>
+</div>
+
+{{!-- scrolling content wrapper --}}
+<div class="content-wrapper">
+    <div class="content">
+        <h1 id="articles-header">There are no articles to display</h1>
+
+        {{!-- pure grid --}}
+        <div id="articles-container" class="pure-g">
+
+            {{!-- dynamically created articles go here --}}
+        </div>
+
+    </div>
+</div>
+
+{{!-- results modal - displays number of articles scraped --}}
+<div id="results-modal" class="modal fade modal-dialog modal-sm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
+        <h1 id="myModalLabel">Scraping Complete</h1>
+    </div>
+
+    <div class="modal-body">
+        <h2 id="scrape-message"><span id="num-scrapes"></span> articles returned</h2>
+    </div>
+
+    <div class="modal-footer">
+        <button class="pure-button" data-dismiss="modal" aria-hidden="true">Close</button>
+    </div>
+</div>
+
+{{!-- saved modal - displays number of articles saved --}}
+<div id="saved-modal" class="modal fade modal-dialog modal-sm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
+        <h1 id="myModalLabel">Article Saved</h1>
+    </div>
+
+    <div class="modal-body">
+        <h2 id="saved-message"></h2>
+    </div>
+
+    <div class="modal-footer">
+        <a href="/saved"><button class="pure-button" aria-hidden="true">View Saved Articles</button></a>
+        <button class="pure-button" data-dismiss="modal" aria-hidden="true">Close</button>
+    </div>
+</div>
+
+{{!-- saved modal - displays number of articles saved --}}
+<div id="deleted-modal" class="modal fade modal-dialog modal-sm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
+        <h1 id="myModalLabel">Article Deleted</h1>
+    </div>
+
+    <div class="modal-body">
+        <h2 id="saved-message"></h2>
+    </div>
+
+    <div class="modal-footer">
+        <button class="pure-button" data-dismiss="modal" aria-hidden="true">Ok</button>
+    </div>
+</div>
+
+{{!-- error modal - article already saved --}}
+<div id="error-modal" class="modal fade modal-dialog modal-sm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
+        <h1 id="myModalLabel">Error</h1>
+    </div>
+
+    <div class="modal-body">
+        <h2 id="error-message">Article already saved</h2>
+    </div>
+
+    <div class="modal-footer">
+        <button class="pure-button" data-dismiss="modal" aria-hidden="true">Ok</button>
+    </div>
+</div>
+<script src="assets/js/app.js"></script>
