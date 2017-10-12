@@ -2,6 +2,7 @@ const express = require("express");
 const Exphbs = require("express-handlebars");
 var logger = require("morgan");
 var bodyParser = require("body-parser");
+var mongoose = require("mongoose");
 
 // Set mongoose to leverage built in JavaScript ES6 Promises
 mongoose.Promise = Promise;
