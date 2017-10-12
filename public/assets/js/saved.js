@@ -6,6 +6,7 @@ $(document).ready(function() {
 
     $.get("/saved/all", function(data) {
 
+        console.log(data);
         savedArticles += data.length;
 
         if(data.length > 0) {
