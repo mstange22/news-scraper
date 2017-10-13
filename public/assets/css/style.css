@@ -180,10 +180,22 @@ a.pure-button-primary {
     border-radius: 5px;
 }
 
+.article-head .note-button {
+    max-width: 154.7px;
+}
+
+.note-flag {
+    position: relative;
+    top: -5px;
+    left: -5px;
+    color: red;
+}
+
 .article-body {
     background-color: #f7f9fa;
     border-radius: 0px 0px 5px 5px;
     text-align: left;
+    padding: 10px;
 }
 
 .article-body .article-link,
@@ -191,16 +203,10 @@ a.pure-button-primary {
     color: #2d3e50;
     float: left;
     clear:both;
-    margin-left: 10px;
 }
 
 .article-body .article-summary {
     font-weight: bold;
-}
-
-.article-body {
-    padding-top: 10px;
-    padding-bottom: 10px;
 }
 
 .article-note {
@@ -220,7 +226,8 @@ a.pure-button-primary {
     border: 1px solid #cccccc;
     border-radius: 5px;
     color: #7f8c8d;
-    font-size: 10px;
+    font-size: 16px;
+    padding: 10px;
 }
 
 .new-note-text {
@@ -269,10 +276,6 @@ a.pure-button-primary {
 
 .modal {
     text-align: center;
-}
-
-#scrape-message {
-    font-size
 }
 
 @media (min-width: 78em) {

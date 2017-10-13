@@ -4,6 +4,9 @@ const cheerio = require("cheerio");
 var Note = require("../models/Note.js");
 var Article = require("../models/Article.js");
 
+// array to store articles for inserting into database
+var articleArray = [];
+
 module.exports = function(app) {
 
     // Route displays landing page
@@ -16,10 +19,24 @@ module.exports = function(app) {
         res.render("saved");
     });
 
-    // get route to return all articles in the database
-    app.get("/all", function(req, res) {
+    // get route to return all non-saved articles in the database
+    app.get("/new", function(req, res) {
+        
+        Article.find({isSaved: false}, function(error, data) {
 
-        Article.find({}, function(error, data) {
+            if (error) {
+                console.log(error);
+            }
+            else {
+                res.json(data);
+            }
+        });
+    });
+
+    // get route to return all articles in the database
+    app.get("/saved/all", function(req, res) {
+
+        Article.find({isSaved: true}, function(error, data) {
 
             if (error) {
                 console.log(error);
@@ -33,43 +50,34 @@ module.exports = function(app) {
     // scrape route - hit NYT business page
     app.get("/scrape", function(req, res) {
 
-        // array to store articles for inserting into database
-        var articleArray = [];
-
+        articleArray = [];
+        let newArticle = {};
+        
         request("https://www.nytimes.com/section/business", function(error, response, html) {
-
+    
             let $ = cheerio.load(html);
             
             // for every headline on the page
             $("h2.headline").each(function(index, element) {
-
+    
                 let link = $(element).find("a").attr("href");
                 let title = $(element).find("a").text();
                 let summary = $(element).closest(".story-body").find(".summary").text();
                 let byline = $(element).closest(".story-body").find(".author").text();
         
-                //if the headline has a link, push it onto the array for storage
+                // if the headline has a link, collect the entire article object and add it to array
                 if(link) {
-                    articleArray.push({title: title, link: link, summary: summary, byline: byline});
+    
+                    newArticle = { title: title, link: link, summary: summary, byline: byline, isSaved: false };
+                    articleArray.push(newArticle);
                 }
             });
+
+            Article.insertMany(articleArray);
             res.send(articleArray);
-        });
-    });
 
-    // get route to return all saved articles
-    app.get("/saved/all", function(req, res) {
-
-        Article.find({}, function(error, data) {
-
-            console.log(data);
-
-            if (error) {
-                console.log(error);
-            }
-            else {
-                res.json(data);
-            }
+            // let articleToAdd = new Article(newArticle);
+            // articleToAdd.save(function(error, doc)
         });
     });
 
@@ -77,14 +85,12 @@ module.exports = function(app) {
     app.post("/save", function(req, res) {
 
         // check to see if the article is already saved
-        Article.findOne({ title: req.body.title }, function(error, result) {
+        Article.find({ title: req.body.title }, function(error, result) {
 
-            // if not already saved, add it to the db
-            if(!result) {
+            // if not already saved, update isSaved property to true
+            if(!result.isSaved) {
 
-                let newArticle = Article(req.body);
-
-                newArticle.save(req.body, function(error, data) {
+                Article.findOneAndUpdate({ title: req.body.title }, {isSaved: true}).exec(function(error, data) {
                     res.json(data);
                 });
             }
@@ -99,7 +105,7 @@ module.exports = function(app) {
     // delete route to remove an article from the database
     app.post("/delete", function(req, res) {
 
-        Article.findOneAndRemove({ title: req.body.title }, function(error, data) {
+        Article.findOneAndUpdate({ title: req.body.title }, {isSaved: false}).exec(function(error, data) {
         if(error) {
             console.log(error);
         }

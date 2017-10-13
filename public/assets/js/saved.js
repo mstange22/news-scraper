@@ -1,12 +1,12 @@
 let savedArticles = 0;
 let currentArticleNotes = 0;
 let currentSavedArticleID = "";
+let currentSavedArticle;
 
 $(document).ready(function() {
 
     $.get("/saved/all", function(data) {
 
-        console.log(data);
         savedArticles += data.length;
 
         if(data.length > 0) {
@@ -37,6 +37,7 @@ $(document).on("click", ".delete-article-button", function() {
 $(document).on("click", ".note-button", function() {
 
     currentSavedArticleID = $(this).closest(".article").data("id");
+    currentSavedArticle = $(this).closest(".article");
     let noteSearchRoute = "/notes/" + currentSavedArticleID;
     currentArticleNotes = 0;
 
@@ -46,7 +47,6 @@ $(document).on("click", ".note-button", function() {
     // get route to search db for article notes
     $.get(noteSearchRoute, function(data) {
 
-        console.log(data);
         let notes = data[0].notes;
 
         // populate modal with notes, if exist
@@ -67,28 +67,36 @@ $(document).on("click", ".note-button", function() {
     });
 });
 
+$("#notes-modal").on("hidden", function() {
+
+    $("#notes-container").html("<div class=\"article-note empty\">There are no notes for this article</div>");
+    $("#notes-container").addClass("empty");
+});
+
 // note submit button listener
 $("#note-submit-button").click(function(event) {
 
     event.preventDefault();
     
-    let postRoute = "/note/" + currentSavedArticleID;
-    let newNote = {text: $("#new-note").val().trim()};
-    $("#new-note").val("");
+    if($("#new-note").val().trim() != "") {
 
-    // post route to update new note to database
-    $.post(postRoute, newNote, function(data) {
-
-        console.log(data);
-    });
-
-    $("#notes-modal").modal("toggle");
+        let postRoute = "/note/" + currentSavedArticleID;
+        let newNote = {text: $("#new-note").val().trim()};
+        $("#new-note").val("");
+    
+        // post route to update new note to database
+        $.post(postRoute, newNote, function(data) {
+        });
+    
+        // make sure current saved article's note button has flag
+        currentSavedArticle.find(".note-button").html("Article Notes <i class=\"fa fa-exclamation-circle note-flag\" aria-hidden=\"true\"></i>");
+        $("#notes-modal").modal("toggle");
+    }
 });
 
 // delete note button listener
 $(document).on("click", ".delete-note-button", function() {
 
-    console.log($(this).closest(".article-note").data("id"));
     let noteID = $(this).closest(".article-note").data("id");
 
     $(this).closest(".article-note").remove();
@@ -97,19 +105,26 @@ $(document).on("click", ".delete-note-button", function() {
     if(currentArticleNotes === 0) {
 
         $("#notes-container").html("<div class=\"article-note empty\">There are no notes for this article</div>");
+
+        // remove current saved article's note button flag
+        currentSavedArticle.find(".note-button").html("Article Notes");
     }
 
     let noteToDelete = {articleID: currentSavedArticleID, noteID: noteID};
 
     $.post("/note/delete/" + noteID, noteToDelete, function(data) {
-        console.log(data);
+    });
+});
+
+$("#notes-modal").on("hidden", function() {
+
+    $.get("/saved", function(data) {
+        
     });
 });
 
 // helper function to display one note in the notes modal
 function displayNote(note) {
-    
-    console.log(note);
 
     let newNote = $("<div>");
     newNote.addClass("article-note");
@@ -155,7 +170,15 @@ function displaySavedArticle(article) {
     newHeader.text(article.title.trim());
     newNoteButton = $("<a>");
     newNoteButton.addClass("pure-button note-button");
-    newNoteButton.text("Article Notes");
+
+    if(article.notes.length > 0) {
+        newNoteButton.html("Article Notes <i class=\"fa fa-exclamation-circle note-flag\" aria-hidden=\"true\"></i>");
+    }
+
+    else {
+        newNoteButton.text("Article Notes");
+    }
+
     newDeleteButton = $("<a>");
     newDeleteButton.addClass("pure-button delete-article-button");
     newDeleteButton.text("Delete from Saved");

@@ -1,15 +1,33 @@
 $(document).ready(function() {
 
+    $.get("/new", function(result) {
+
+        console.log(result);
+        console.log(result.length);
+
+        if(result.length > 0) {
+            displayResults(result);
+        }
+    });
+
     $("#scrape-button").click(function() {
     
         $.get("/scrape", function(result) {
 
-            // console.log(result);   
-            // console.log(result.length);
+            console.log(result);   
+            console.log(result.length);
 
             $("#num-scrapes").text(result.length);
             $("#results-modal").modal("toggle");
             displayResults(result);
+
+            // setTimeout(function() {
+
+            //     $.get("new", function(result) {
+            //         displayResults(result);
+            //     });
+
+            // }, 500);
         });
     });
 });
@@ -20,10 +38,12 @@ $(document).on("click", ".save-article-button", function() {
     let article = {
         title: $(this).closest(".article").find(".article-header").text(),
         link: $(this).closest(".article").find(".article-link").text(),
-        summary: $(this).closest(".article").find(".article-summary").text()
+        summary: $(this).closest(".article").find(".article-summary").text(),
+        isSaved: true
     };
 
-    // console.log(article);
+    // remove article from page
+    $(this).closest(".article").remove();
         
     $.post("/save", article, function(data) {
 
@@ -35,7 +55,7 @@ $(document).on("click", ".save-article-button", function() {
 
         else {
             $("#saved-message").text(data.title);
-            $("#saved-modal").modal("toggle");
+            // $("#saved-modal").modal("toggle");
         }
     });
 });
@@ -44,7 +64,7 @@ $(document).on("click", ".save-article-button", function() {
 function displayResults(articles) {
 
     $("#articles-container").empty();
-    $("#articles-header").text("Scraped Articles");
+    $("#articles-header").text("New Articles");
 
     for(i = 0; i < articles.length; i++) {
 
