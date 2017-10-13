@@ -176,6 +176,7 @@ a.pure-button-primary {
     float: left;
     background-color: gold;
     color: #2d3e50;
+    font-weight: bold;
     border-radius: 20px;
     width: 55px;
     padding: 2px;
