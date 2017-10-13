@@ -153,7 +153,7 @@ function displayNote(note) {
 function displaySavedArticles(articles) {
 
     $("#saved-articles-container").empty();
-    $("#saved-articles-header").text("Saved Articles");
+    $("#saved-articles-header").empty();//text("Saved Articles");
 
     for(i = 0; i < articles.length; i++) {
 
