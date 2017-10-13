@@ -59,7 +59,6 @@ module.exports = function(app) {
         // get all existing articles for comparison
         Article.find({}, function(error, data){
             existingArticles = data;
-            console.log(existingArticles);
         })
         
         request("https://www.nytimes.com/section/business", function(error, response, html) {
@@ -185,8 +184,6 @@ module.exports = function(app) {
         Article.find({ _id: req.params.id })
         .populate("notes")
         .exec(function(error, data) {
-
-            console.log(data);
 
             if(!data[0].notes) {
                 res.send(null);

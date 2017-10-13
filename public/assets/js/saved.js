@@ -27,9 +27,7 @@ $(document).on("click", ".delete-article-button", function() {
         $("#saved-articles-header").text("There are no saved articles to display");
     }
 
-    $.post("/unsave", articleToDelete, function() {
-
-    });
+    $.post("/unsave", articleToDelete, function() {});
 });
 
 // click listener for article notes
@@ -66,8 +64,8 @@ $(document).on("click", ".note-button", function() {
     });
 });
 
+// clear out & reset notes modal header
 $("#notes-modal").on("hidden", function() {
-
     $("#notes-container").html("<div class=\"article-note empty\">There are no notes for this article</div>");
     $("#notes-container").addClass("empty");
 });
@@ -129,26 +127,6 @@ $("#notes-modal").on("hidden", function() {
     });
 });
 
-// helper function to display one note in the notes modal
-function displayNote(note) {
-
-    let newNote = $("<div>");
-    newNote.addClass("article-note");
-    newNote.attr("data-id", note._id);
-    $("#notes-container").append(newNote);
-
-    let newNoteText = $("<span>");
-    newNoteText.addClass("new-note-text");
-    newNoteText.text(note.text);
-
-    let deleteNoteButton = $("<a>");
-    deleteNoteButton.addClass("pure-button");
-    deleteNoteButton.addClass("delete-note-button");
-    deleteNoteButton.text("x");
-
-    newNote.append(newNoteText, deleteNoteButton);
-}
-
 // display all articles received
 function displaySavedArticles(articles) {
 
@@ -207,4 +185,24 @@ function displaySavedArticle(article) {
     newArticle.append(newArticleHead, newArticleBody);
 
     $("#saved-articles-container").append(newArticle);
+}
+
+// helper function to display one note in the notes modal
+function displayNote(note) {
+
+    let newNote = $("<div>");
+    newNote.addClass("article-note");
+    newNote.attr("data-id", note._id);
+    $("#notes-container").append(newNote);
+
+    let newNoteText = $("<span>");
+    newNoteText.addClass("new-note-text");
+    newNoteText.text(note.text);
+
+    let deleteNoteButton = $("<a>");
+    deleteNoteButton.addClass("pure-button");
+    deleteNoteButton.addClass("delete-note-button");
+    deleteNoteButton.text("x");
+
+    newNote.append(newNoteText, deleteNoteButton);
 }
