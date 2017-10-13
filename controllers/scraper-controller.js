@@ -1,11 +1,13 @@
 const request = require("request");
 const cheerio = require("cheerio");
 
-var Note = require("../models/Note.js");
-var Article = require("../models/Article.js");
+let Note = require("../models/Note.js");
+let Article = require("../models/Article.js");
 
-// array to store articles for inserting into database
-var articleArray = [];
+let scrapedArticles = [];
+let existingArticles = [];
+let newArticles = [];
+let articleMatch = false;
 
 module.exports = function(app) {
 
@@ -50,8 +52,15 @@ module.exports = function(app) {
     // scrape route - hit NYT business page
     app.get("/scrape", function(req, res) {
 
-        articleArray = [];
+        scrapedArticles = [];
+        newArticles = [];
         let newArticle = {};
+
+        // get all existing articles for comparison
+        Article.find({}, function(error, data){
+            existingArticles = data;
+            console.log(existingArticles);
+        })
         
         request("https://www.nytimes.com/section/business", function(error, response, html) {
     
@@ -69,15 +78,41 @@ module.exports = function(app) {
                 if(link) {
     
                     newArticle = { title: title, link: link, summary: summary, byline: byline, isSaved: false };
-                    articleArray.push(newArticle);
+                    scrapedArticles.push(newArticle);
                 }
             });
 
-            Article.insertMany(articleArray);
-            res.send(articleArray);
+            // if there are articles in the database, compare with incoming array to avoid duplicates
+            if(existingArticles) {
 
-            // let articleToAdd = new Article(newArticle);
-            // articleToAdd.save(function(error, doc)
+                for(let i = 0; i < scrapedArticles.length; i++) {
+
+                    articleMatch = false;
+
+                    //compare articleArray[0] with elements in existing Articles
+                    for(let j = 0; j < existingArticles.length; j++) {
+
+                        if(scrapedArticles[i].title.trim() === existingArticles[j].title.trim()) {
+                            
+                            // if a match is found, break out of existing articles loop
+                            articleMatch = true;
+                            break;
+                        }
+                    }
+
+                    // if we did not find a match
+                    if(!articleMatch) {
+
+                        newArticles.push(scrapedArticles[i]);
+                    }
+                }
+            }
+
+            // if there are new articles
+            if(newArticles.length > 0) {
+                Article.insertMany(newArticles);    
+            }
+            res.send(newArticles);
         });
     });
 
