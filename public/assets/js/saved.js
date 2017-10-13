@@ -7,7 +7,7 @@ $(document).ready(function() {
 
     $.get("/saved/all", function(data) {
 
-        savedArticles += data.length;
+        savedArticles = data.length;
 
         if(data.length > 0) {
             displaySavedArticles(data);
@@ -24,7 +24,7 @@ $(document).on("click", ".delete-article-button", function() {
     savedArticles--;
 
     if(savedArticles === 0) {
-        $("#saved-articles-header").text("There are no saved articles");
+        $("#saved-articles-header").text("There are no saved articles to display");
     }
 
     $.post("/unsave", articleToDelete, function() {
@@ -153,7 +153,7 @@ function displayNote(note) {
 function displaySavedArticles(articles) {
 
     $("#saved-articles-container").empty();
-    $("#saved-articles-header").empty();//text("Saved Articles");
+    $("#saved-articles-header").empty();
 
     for(i = 0; i < articles.length; i++) {
 

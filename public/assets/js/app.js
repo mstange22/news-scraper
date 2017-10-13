@@ -5,12 +5,9 @@ $(document).ready(function() {
 
     $.get("/new", function(result) {
 
-        // console.log(result);
-        // console.log(result.length);
-
         if(result.length > 0) {
             
-            displayedArticles += result.length;
+            displayedArticles = result.length;
             displayResults(result);
         }
     });
@@ -19,8 +16,6 @@ $(document).ready(function() {
     
         $.get("/scrape", function(data) {
 
-            // console.log(result);   
-            // console.log(result.length);
             newArticles = data;
 
             $("#num-scrapes").text(data.length);
@@ -30,7 +25,7 @@ $(document).ready(function() {
                 $.get("/new", function(result) {
                             
                     if(result.length > 0) {
-                        displayedArticles += result.length;
+                        displayedArticles = result.length;
                         displayResults(result);
                     }
                 });
@@ -57,19 +52,7 @@ $(document).on("click", ".save-article-button", function() {
         $("#articles-header").text("There are no unsaved articles to display");
     }
         
-    $.post("/save", article, function(data) {
-
-        console.log(data);
-
-        if(!data) {
-            $("#error-modal").modal("toggle");
-        }
-
-        else {
-            $("#saved-message").text(data.title);
-            // $("#saved-modal").modal("toggle");
-        }
-    });
+    $.post("/save", article, function(data) {});
 });
 
 $(document).on("click", ".delete-article-button", function() {
@@ -84,16 +67,14 @@ $(document).on("click", ".delete-article-button", function() {
         $("#articles-header").text("There are no unsaved articles to display");
     }
 
-    $.post("/delete", articleToDelete, function(data) {
-        console.log(data);
-    })
+    $.post("/delete", articleToDelete, function(data) {})
 })
 
 // display all articles received
 function displayResults(articles) {
 
     $("#articles-container").empty();
-    $("#articles-header").text("Unsaved Articles");
+    $("#articles-header").empty();
 
     // first display new articles
     for(let i = 0; i < newArticles.length; i++) {

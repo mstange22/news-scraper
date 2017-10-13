@@ -22,7 +22,7 @@
 {{!-- scrolling content wrapper --}}
 <div class="content-wrapper">
     <div class="content">
-        <h1 id="articles-header">No new articles. Scrape away!</h1>
+        <h1 id="articles-header">There are no unsaved articles to display</h1>
 
         {{!-- pure grid --}}
         <div id="articles-container" class="pure-g">
@@ -45,52 +45,6 @@
 
     <div class="modal-footer">
         <button class="pure-button" data-dismiss="modal" aria-hidden="true">Close</button>
-    </div>
-</div>
-
-{{!-- saved modal - displays number of articles saved --}}
-<div id="saved-modal" class="modal fade modal-dialog modal-sm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-header">
-        <h1 id="myModalLabel">Article Saved</h1>
-    </div>
-
-    <div class="modal-body">
-        <h2 id="saved-message"></h2>
-    </div>
-
-    <div class="modal-footer">
-        <a href="/saved"><button class="pure-button" aria-hidden="true">View Saved Articles</button></a>
-        <button class="pure-button" data-dismiss="modal" aria-hidden="true">Close</button>
-    </div>
-</div>
-
-{{!-- saved modal - displays number of articles saved --}}
-<div id="deleted-modal" class="modal fade modal-dialog modal-sm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-header">
-        <h1 id="myModalLabel">Article Deleted</h1>
-    </div>
-
-    <div class="modal-body">
-        <h2 id="saved-message"></h2>
-    </div>
-
-    <div class="modal-footer">
-        <button class="pure-button" data-dismiss="modal" aria-hidden="true">Ok</button>
-    </div>
-</div>
-
-{{!-- error modal - article already saved --}}
-<div id="error-modal" class="modal fade modal-dialog modal-sm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-header">
-        <h1 id="myModalLabel">Error</h1>
-    </div>
-
-    <div class="modal-body">
-        <h2 id="error-message">Article already saved</h2>
-    </div>
-
-    <div class="modal-footer">
-        <button class="pure-button" data-dismiss="modal" aria-hidden="true">Ok</button>
     </div>
 </div>
 <script src="assets/js/app.js"></script>
