@@ -78,6 +78,7 @@ $("#note-submit-button").click(function(event) {
 
     event.preventDefault();
     
+    currentArticleNotes++;
     if($("#new-note").val().trim() != "") {
 
         let postRoute = "/note/" + currentSavedArticleID;
@@ -89,7 +90,8 @@ $("#note-submit-button").click(function(event) {
         });
     
         // make sure current saved article's note button has flag
-        currentSavedArticle.find(".note-button").html("Article Notes <i class=\"fa fa-exclamation-circle note-flag\" aria-hidden=\"true\"></i>");
+        currentSavedArticle.find(".note-button").html("Article Notes <i class=\"fa fa-comments\"></i><span class=\"comments-badge\">" +
+                                                                                currentArticleNotes + "</span>");
         $("#notes-modal").modal("toggle");
     }
 });
@@ -108,6 +110,11 @@ $(document).on("click", ".delete-note-button", function() {
 
         // remove current saved article's note button flag
         currentSavedArticle.find(".note-button").html("Article Notes");
+    }
+    
+    else {
+        currentSavedArticle.find(".note-button").html("Article Notes <i class=\"fa fa-comments\"></i><span class=\"comments-badge\">" +
+                                                                                currentArticleNotes + "</span>");
     }
 
     let noteToDelete = {articleID: currentSavedArticleID, noteID: noteID};
@@ -172,7 +179,8 @@ function displaySavedArticle(article) {
     newNoteButton.addClass("pure-button note-button");
 
     if(article.notes.length > 0) {
-        newNoteButton.html("Article Notes <i class=\"fa fa-exclamation-circle note-flag\" aria-hidden=\"true\"></i>");
+        newNoteButton.html("Article Notes <i class=\"fa fa-comments\"></i><span class=\"comments-badge\">" +
+                                                        article.notes.length + "</span>");
     }
 
     else {
