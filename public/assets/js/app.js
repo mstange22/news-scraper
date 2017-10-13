@@ -1,9 +1,11 @@
+let newArticles = [];
+
 $(document).ready(function() {
 
     $.get("/new", function(result) {
 
-        console.log(result);
-        console.log(result.length);
+        // console.log(result);
+        // console.log(result.length);
 
         if(result.length > 0) {
             displayResults(result);
@@ -14,20 +16,24 @@ $(document).ready(function() {
     
         $.get("/scrape", function(result) {
 
-            console.log(result);   
-            console.log(result.length);
+            // console.log(result);   
+            // console.log(result.length);
+            newArticles = result;
 
             $("#num-scrapes").text(result.length);
             $("#results-modal").modal("toggle");
-            displayResults(result);
 
-            // setTimeout(function() {
-
-            //     $.get("new", function(result) {
-            //         displayResults(result);
-            //     });
-
-            // }, 500);
+            setTimeout(function() {
+                $.get("/new", function(result) {
+                
+                    // console.log(result);
+                    // console.log(result.length);
+            
+                    if(result.length > 0) {
+                        displayResults(result);
+                    }
+                });
+            }, 500);
         });
     });
 });
@@ -64,11 +70,19 @@ $(document).on("click", ".save-article-button", function() {
 function displayResults(articles) {
 
     $("#articles-container").empty();
-    $("#articles-header").text("New Articles");
+    $("#articles-header").text("Unsaved Articles");
 
-    for(i = 0; i < articles.length; i++) {
+    // first display new articles
+    for(let i = 0; i < newArticles.length; i++) {
+        displayArticle(newArticles[i]);
+    }
 
-        displayArticle(articles[i]);
+    // then display old articles from entire list
+    for(let i = 0; i < articles.length; i++) {
+
+        if(!isNewArticle(articles[i])) {
+            displayArticle(articles[i]);
+        }
     }
 }
 
@@ -84,10 +98,18 @@ function displayArticle(article) {
     newHeader = $("<h3>");
     newHeader.addClass("article-header");
     newHeader.text(article.title.trim());
+    let newHeaderFlag = $("<span>");
+    newHeaderFlag.addClass("new-article-flag");
+
+    if(isNewArticle(article)) {
+        newHeaderFlag.text("New!");
+        newHeaderFlag.addClass("visible");
+    }
+
     newSaveButton = $("<a>");
     newSaveButton.addClass("pure-button save-article-button");
     newSaveButton.text("Save Article");
-    newArticleHead.append(newHeader, newSaveButton);
+    newArticleHead.append(newHeader, newHeaderFlag, newSaveButton);
 
     // body has summary and link
     newArticleBody = $("<div>");
@@ -105,4 +127,16 @@ function displayArticle(article) {
     newArticle.append(newArticleHead, newArticleBody);
 
     $("#articles-container").append(newArticle);
+}
+
+// helper function to determine if article is new
+function isNewArticle(article) {
+
+    for(let i = 0; i < newArticles.length; i++) {
+
+        if(article.title === newArticles[i].title) {
+            return true;
+        }
+    }
+    return false;
 }

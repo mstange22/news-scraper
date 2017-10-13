@@ -168,6 +168,23 @@ a.pure-button-primary {
     margin-left: 10px;
 }
 
+.new-article-flag {
+    display: none;
+    position: relative;
+    top: -5px;
+    /* left: -3px; */
+    float: left;
+    background-color: red;
+    color: white;
+    border-radius: 55px;
+    width: 55px;
+    padding: 2px;
+}
+
+.new-article-flag.visible {
+    display: inline-block;
+}
+
 .article-head .save-article-button,
 .article-head .note-button,
 .article-head .delete-article-button {
@@ -187,7 +204,7 @@ a.pure-button-primary {
 .note-flag {
     position: relative;
     top: -5px;
-    left: -5px;
+    left: -2px;
     color: red;
 }
 
