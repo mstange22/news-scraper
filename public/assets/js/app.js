@@ -9,27 +9,26 @@ $(document).ready(function() {
         // console.log(result.length);
 
         if(result.length > 0) {
+            
+            displayedArticles += result.length;
             displayResults(result);
         }
     });
 
     $("#scrape-button").click(function() {
     
-        $.get("/scrape", function(result) {
+        $.get("/scrape", function(data) {
 
             // console.log(result);   
             // console.log(result.length);
-            newArticles = result;
+            newArticles = data;
 
-            $("#num-scrapes").text(result.length);
+            $("#num-scrapes").text(data.length);
             $("#results-modal").modal("toggle");
 
             setTimeout(function() {
                 $.get("/new", function(result) {
-                
-                    // console.log(result);
-                    // console.log(result.length);
-            
+                            
                     if(result.length > 0) {
                         displayedArticles += result.length;
                         displayResults(result);
