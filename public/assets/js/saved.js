@@ -18,17 +18,16 @@ $(document).ready(function() {
 // delete article button listener
 $(document).on("click", ".delete-article-button", function() {
 
-    savedArticles--;
-
     let articleToDelete = {title: $(this).closest(".article").find(".article-header").text()};
 
     $(this).closest(".article").remove();
+    savedArticles--;
 
     if(savedArticles === 0) {
         $("#saved-articles-header").text("There are no saved articles");
     }
 
-    $.post("/delete", articleToDelete, function() {
+    $.post("/unsave", articleToDelete, function() {
 
     });
 });

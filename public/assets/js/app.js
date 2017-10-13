@@ -1,4 +1,5 @@
 let newArticles = [];
+let displayedArticles = 0;
 
 $(document).ready(function() {
 
@@ -30,6 +31,7 @@ $(document).ready(function() {
                     // console.log(result.length);
             
                     if(result.length > 0) {
+                        displayedArticles += result.length;
                         displayResults(result);
                     }
                 });
@@ -50,6 +52,11 @@ $(document).on("click", ".save-article-button", function() {
 
     // remove article from page
     $(this).closest(".article").remove();
+    displayedArticles--;
+    
+    if(displayedArticles === 0) {
+        $("#articles-header").text("There are no unsaved articles to display");
+    }
         
     $.post("/save", article, function(data) {
 
@@ -65,6 +72,23 @@ $(document).on("click", ".save-article-button", function() {
         }
     });
 });
+
+$(document).on("click", ".delete-article-button", function() {
+
+    let articleToDelete = {title: $(this).closest(".article").find(".article-header").text()};
+
+    // remove article from page
+    $(this).closest(".article").remove();
+    displayedArticles--;
+    
+    if(displayedArticles === 0) {
+        $("#articles-header").text("There are no unsaved articles to display");
+    }
+
+    $.post("/delete", articleToDelete, function(data) {
+        console.log(data);
+    })
+})
 
 // display all articles received
 function displayResults(articles) {
@@ -107,9 +131,12 @@ function displayArticle(article) {
     }
 
     newSaveButton = $("<a>");
-    newSaveButton.addClass("pure-button save-article-button");
-    newSaveButton.text("Save Article");
-    newArticleHead.append(newHeader, newHeaderFlag, newSaveButton);
+    newSaveButton.addClass("pure-button delete-article-button");
+    newSaveButton.text("Delete Article");
+    newDeleteButton = $("<a>");
+    newDeleteButton.addClass("pure-button save-article-button");
+    newDeleteButton.text("Save Article");
+    newArticleHead.append(newHeader, newHeaderFlag, newDeleteButton, newSaveButton);
 
     // body has summary and link
     newArticleBody = $("<div>");

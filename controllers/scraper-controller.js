@@ -137,8 +137,8 @@ module.exports = function(app) {
 
     });
 
-    // delete route to remove an article from the database
-    app.post("/delete", function(req, res) {
+    // unsave route to remove an article from the saved articles list 
+    app.post("/unsave", function(req, res) {
 
         Article.findOneAndUpdate({ title: req.body.title }, {isSaved: false}).exec(function(error, data) {
         if(error) {
@@ -150,11 +150,21 @@ module.exports = function(app) {
         });
     });
 
-    // post route to delete a note from the db
-    app.post("/note/delete/:id", function(req, res) {
+    // post route delete an article from the database
+    app.post("/delete", function(req, res) {
 
-        console.log(req.params.id);
-        console.log(req.body);
+        Article.findOneAndRemove({title: req.body.title}, function(error, data) {
+
+            if(error) {
+                console.log(error);
+            }
+
+            else res.json(data);
+        });
+    })
+
+    // post route to delete a note from the database
+    app.post("/note/delete/:id", function(req, res) {
 
         Note.findOneAndRemove({ _id: req.params.id }, function(error, data) {
 
@@ -163,10 +173,7 @@ module.exports = function(app) {
             }
             else {
                 // then find the associate article from the req.params.id
-                console.log(req.body.articleID);
-                console.log(req.params.id);
                 Article.update({ _id: req.body.articleID }, { $pull: {"notes": req.params.id }}).exec(function(error, data) {
-                    console.log("am I here?");
                     res.json(data);
                 });
             }
