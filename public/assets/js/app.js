@@ -96,27 +96,52 @@ function displayArticle(article) {
     let newArticle = $("<div>");
     newArticle.addClass("article");
 
-    // head has header & save button
+    // head contains text & buttons containers
     let newArticleHead = $("<div>");
     newArticleHead.addClass("pure-u-1 article-head");
+
+    // text container
+    let newArticleHeadText = $("<div>");
+    newArticleHeadText.addClass("pure-u-3-4 article-head-text");
+
+    // headline text
     newHeader = $("<h3>");
     newHeader.addClass("article-header");
     newHeader.text(article.title.trim());
-    let newHeaderFlag = $("<span>");
-    newHeaderFlag.addClass("new-article-flag");
+    
+    // new article badge
+    // let newArticleBadgeContainer = $("<div>");
+    // newArticleBadgeContainer.addClass("pure-u-1-12");
 
+    let newArticleBadge = $("<span>");
+    newArticleBadge.addClass("new-article-badge")
+    // newArticleBadgeContainer.append(newArticleBadge);
+
+    // if new, add badge
     if(isNewArticle(article)) {
-        newHeaderFlag.text("New!");
-        newHeaderFlag.addClass("visible");
+        newArticleBadge.text("New!");
+        newArticleBadge.addClass("visible");
     }
 
+    newArticleHeadText.append(newHeader, newArticleBadge);
+
+    // button container
+    let newArticleHeadButtons = $("<div>");
+    newArticleHeadButtons.addClass("pure-u-1-4 article-head-buttons");
+
+    // save article button
     newSaveButton = $("<a>");
     newSaveButton.addClass("pure-button delete-article-button");
-    newSaveButton.text("Delete Article");
+    newSaveButton.text("Delete");
+
+    // delete article button
     newDeleteButton = $("<a>");
     newDeleteButton.addClass("pure-button save-article-button");
-    newDeleteButton.text("Save Article");
-    newArticleHead.append(newHeader, newHeaderFlag, newDeleteButton, newSaveButton);
+    newDeleteButton.text("Save"); 
+
+    newArticleHeadButtons.append(newDeleteButton, newSaveButton);
+
+    newArticleHead.append(newArticleHeadText, newArticleHeadButtons);
 
     // body has summary and link
     newArticleBody = $("<div>");
